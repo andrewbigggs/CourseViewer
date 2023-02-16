@@ -11,19 +11,30 @@ BinarySearchTree::BinarySearchTree() {
     root = nullptr;
 }
 
-void BinarySearchTree::addNode(Course course) {
-    if (root == nullptr) {
-        root = new Node(course);
-        return;
+/**
+ * Add a Course to some node (recursive)
+ *
+ * @param curNode Current node in tree
+ * @param course Course to be added
+ */
+void BinarySearchTree::addNode(Node* curNode, Course course) {
+    /// Find the bid's spot in the Tree by recursive searching the nodes for its appropriate location
+    /// Add node to left subtree
+    if (curNode->data.courseNumber > course.courseNumber) {
+        if (curNode->left == nullptr) {
+            curNode->left = new Node(course);
+        }
+        else
+            this->addNode(curNode->left, course);
     }
-    Node* curNode = root;
-    while (curNode != nullptr) {
-        if (course.courseNumber < curNode->data.courseNumber)
-            curNode = curNode->left;
-        if (course.courseNumber > curNode->data.courseNumber)
-            curNode = curNode->right;
+    /// Add node to right subtree
+    else {
+        if (curNode->right == nullptr) {
+            curNode->right = new Node(course);
+        }
+        else
+            this->addNode(curNode->right, course);
     }
-    curNode->data = course;
 }
 
 void BinarySearchTree::inorderTraversalWithPrint(Node* node) {
@@ -41,7 +52,10 @@ void BinarySearchTree::searchNode(Node* node) {
 }
 
 void BinarySearchTree::Insert(Course course) {
-    addNode(course);
+    if (root == nullptr)
+        root = new Node(course);
+    else
+        addNode(root, course);
 }
 
 void BinarySearchTree::DisplayCourseList() {
