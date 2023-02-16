@@ -41,7 +41,7 @@ class BinarySearchTree {
 private:
     void addNode(Node* curNode, Course course);
     void inorderTraversalWithPrint(Node *node);
-    int searchNode(string courseNum);
+    void searchNode(string courseNum);
     
     Node* root;
     
