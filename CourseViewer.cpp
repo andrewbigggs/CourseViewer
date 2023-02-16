@@ -7,6 +7,9 @@
 
 #include "CourseViewer.hpp"
 
+/**
+ * Default constructor
+ */
 BinarySearchTree::BinarySearchTree() {
     root = nullptr;
 }
@@ -37,6 +40,11 @@ void BinarySearchTree::addNode(Node* curNode, Course course) {
     }
 }
 
+/**
+ * Visit each node, display courseNumber and courseName
+ *
+ *@param node Node to begin the traversal from (effective root node)
+ */
 void BinarySearchTree::inorderTraversalWithPrint(Node* node) {
     if (node->left != nullptr)
         inorderTraversalWithPrint(node->left);
@@ -47,6 +55,12 @@ void BinarySearchTree::inorderTraversalWithPrint(Node* node) {
         inorderTraversalWithPrint(node->right);
 }
 
+/**
+ * Determine if a courseNumber matches the courseNumber of a node in the tree,
+ * display that node's info.
+ *
+ *@param courseNum The courseNumber to search for
+ */
 void BinarySearchTree::searchNode(string courseNum) {
     Node* node = root;
     while (node != nullptr) {
@@ -77,6 +91,11 @@ void BinarySearchTree::searchNode(string courseNum) {
     cout << courseNum << " not found in database." << endl;
 }
 
+/**
+ * Insert a node in the appropriate position in the tree.
+ *
+ *@param course The course object that will belong to the node being inserted
+ */
 void BinarySearchTree::Insert(Course course) {
     if (root == nullptr)
         root = new Node(course);
@@ -84,10 +103,18 @@ void BinarySearchTree::Insert(Course course) {
         addNode(root, course);
 }
 
+/**
+ * Display all courses
+ */
 void BinarySearchTree::DisplayCourseList() {
     inorderTraversalWithPrint(root);
 }
 
+/**
+ * Search for a specific course by its courseNumber
+ *
+ *@param courseNum The courseNumber to search for
+ */
 void BinarySearchTree::DisplayACourse(string courseNum) {
     searchNode(courseNum);
 }

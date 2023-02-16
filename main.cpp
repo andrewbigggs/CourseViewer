@@ -12,12 +12,15 @@ using namespace std;
 
 /**
  * Function to check each prerequisite is also in the list of courses
+ *
+ *@param curPrereq Course prerequisite to check
+ *@param courseNumList List of courseNumbers to check curPrereq against
  */
-int CheckPrereq(Course curCourse, vector<string> courseNumList) {
+int CheckPrereq(string curPrereq, vector<string> courseNumList) {
     unsigned int i;
     unsigned int counter = 0;
     for (i = 0; i < courseNumList.size(); ++i) {
-        if (curCourse.prereq1 == courseNumList[i])
+        if (curPrereq == courseNumList[i])
             counter++;
     }
     if (!counter) {
@@ -62,16 +65,17 @@ int main() {
                     menuChoice = 9;
                     break;
                 }
-                
+                /// Create list of all courseNumbers
                 for (i = 0; i < fileData.size(); ++i)
                     courseNumList.push_back(fileData[i][0]);
-                /// Store course data in Course objects
+                /// Store course data in Course objects,
+                /// check to make sure all prerequisites are also courseNumbers
                 for (i = 0; i < fileData.size(); ++i) {
                     curCourse.courseNumber = fileData[i][0];
                     curCourse.courseName = fileData[i][1];
                     if (fileData[i].size() > 2) {
                         curCourse.prereq1 = fileData[i][2];
-                        if(!CheckPrereq(curCourse, courseNumList)) {
+                        if(!CheckPrereq(curCourse.prereq1, courseNumList)) {
                             menuChoice = 9;
                             break;
                         }
@@ -80,7 +84,7 @@ int main() {
                         curCourse.prereq1 = "";
                     if (fileData[i].size() > 3) {
                         curCourse.prereq2 = fileData[i][3];
-                        if(!CheckPrereq(curCourse, courseNumList)) {
+                        if(!CheckPrereq(curCourse.prereq2, courseNumList)) {
                             menuChoice = 9;
                             break;
                         }
@@ -89,7 +93,7 @@ int main() {
                         curCourse.prereq2 = "";
                     if (fileData[i].size() > 4) {
                         curCourse.prereq3 = fileData[i][4];
-                        if(!CheckPrereq(curCourse, courseNumList)) {
+                        if(!CheckPrereq(curCourse.prereq3, courseNumList)) {
                             menuChoice = 9;
                             break;
                         }
@@ -101,11 +105,13 @@ int main() {
                 break;
             case 2:
                 tree->DisplayCourseList();
+                cout << endl;
                 break;
             case 3:
                 cout << "Enter the Course Number you wish to view the details of: ";
                 cin >> userInput;
                 tree->DisplayACourse(userInput);
+                cout << endl;
                 break;
             case 9:
                 cout << "Thank you for using the CourseViewer program!" << endl;
