@@ -7,6 +7,7 @@
 
 #include "CourseViewer.hpp"
 #include "FileReader.hpp"
+#include <time.h>
 
 using namespace std;
 
@@ -31,12 +32,24 @@ int CheckPrereq(string curPrereq, vector<string> courseNumList) {
         return 1;
 }
 
+/**
+ * Function to display number of clock ticks since
+ *
+ *@param ticks initial clock() tick count
+ */
+void DisplayClockTicks(clock_t ticks) {
+    ticks = clock() - ticks; // current clock ticks minus starting clock ticks
+    cout << "time: " << ticks << " clock ticks" << endl;
+    cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+}
+
 int main() {
-    BinarySearchTree* tree = new BinarySearchTree();
-    Course curCourse;
-    vector<vector<string>> fileData;
-    vector<string> courseNumList;
-    string lavatory;
+    clock_t ticks; /// Timer variable
+    BinarySearchTree* tree = new BinarySearchTree(); /// Pointer to the BST
+    Course curCourse; /// Recycled variable that holds each course before it is added to a tree node
+    vector<vector<string>> fileData; /// Each element is a vector that holds data for one line from CSV file
+    vector<string> courseNumList; /// Each element the courseNumber from each line from CSV file
+    string lavatory; /// 'Cleaner' variable to hold getline to clear the input buffer in case wrong input is entered.
     string userInput;
     unsigned int menuChoice = 8;
     unsigned int i;
@@ -45,7 +58,7 @@ int main() {
     while (menuChoice != 9) {
         cout << "Main Menu:" << endl;
         cout << "1. Load file data" << endl;
-        cout << "2. Display list of all course numbers" << endl;
+        cout << "2. Display list of all courses" << endl;
         cout << "3. Display data for one course" << endl;
         cout << "9. Exit the program" << endl;
         cout << "Enter the corresponding digit to make a menu selection." << endl;
@@ -59,7 +72,9 @@ int main() {
         }
         cin.ignore();
         switch (menuChoice) {
-            case 1:
+            case 1: /// 1. Load file data
+                ticks = clock();
+                
                 storeFileData(fileData, flag);
                 if (flag) {
                     menuChoice = 9;
@@ -102,16 +117,21 @@ int main() {
                         curCourse.prereq3 = "";
                     tree->Insert(curCourse);
                 }
+                DisplayClockTicks(ticks);
                 break;
-            case 2:
+            case 2: /// 2. Display list of all courses
+                ticks = clock();
                 tree->DisplayCourseList();
                 cout << endl;
+                DisplayClockTicks(ticks);
                 break;
-            case 3:
+            case 3: /// 3. Display data for one course
                 cout << "Enter the Course Number you wish to view the details of: ";
                 cin >> userInput;
+                ticks = clock();
                 tree->DisplayACourse(userInput);
                 cout << endl;
+                DisplayClockTicks(ticks);
                 break;
             case 9:
                 cout << "Thank you for using the CourseViewer program!" << endl;

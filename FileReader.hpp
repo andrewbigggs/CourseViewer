@@ -8,7 +8,6 @@
 #ifndef FileReader_hpp
 #define FileReader_hpp
 
-#include <stdio.h>
 #include <string>
 #include <vector>
 #include <fstream>

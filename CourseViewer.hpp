@@ -8,7 +8,6 @@
 #ifndef CourseViewer_hpp
 #define CourseViewer_hpp
 
-#include <stdio.h>
 #include <string>
 #include <iostream>
 

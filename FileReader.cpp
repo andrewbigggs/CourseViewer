@@ -17,8 +17,8 @@
 void storeFileData(vector<vector<string>>& allData, bool& flag) {
     fstream fin;
     string userInput;
-    string cell, line;
-    vector<string> row;
+    string cell, line; /// Store individual lines, individual values from the file
+    vector<string> row; /// Store the isolated values from each line
     
     cout << "Type the filename (including extension) you'd like to open." << endl;
     cin >> userInput;
@@ -28,12 +28,11 @@ void storeFileData(vector<vector<string>>& allData, bool& flag) {
         return;
     }
     
-    while (getline(fin, line)) {
+    while (getline(fin, line)) { /// Read data from one line (\n is the default delimiter)
         row.clear();
-        stringstream ss(line);
-        while (getline(ss, cell, ',')) {
+        stringstream ss(line); /// convert data from line to a data stream
+        while (getline(ss, cell, ',')) { /// Read data from line's data stream, with comma as the delimiter
             row.push_back(cell);
-            cout << cell << endl;
         }
         allData.push_back(row);
         if (row.size() < 2) {
