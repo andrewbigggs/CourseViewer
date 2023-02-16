@@ -47,8 +47,30 @@ void BinarySearchTree::inorderTraversalWithPrint(Node* node) {
         inorderTraversalWithPrint(node->right);
 }
 
-void BinarySearchTree::searchNode(Node* node) {
-    
+int BinarySearchTree::searchNode(string courseNum) {
+    Node* node = root;
+    while (node != nullptr) {
+        if (courseNum < node->data.courseNumber)
+            node = node->left;
+        if (courseNum > node->data.courseNumber)
+            node = node->right;
+        if (courseNum == node->data.courseNumber) {
+            cout << courseNum << ": " << node->data.courseName << endl;
+            if (node->data.prereq1 == "")
+                cout << "No Prerequisites" << endl;
+            else {
+                cout << "Prerequisites: " << node->data.prereq1 << endl;
+                if (node->data.prereq2 != "") {
+                    cout << "               " << node->data.prereq2 << endl;
+                    if (node->data.prereq3 != "") {
+                        cout << "               " << node->data.prereq3 << endl;
+                    }
+                }
+            }
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void BinarySearchTree::Insert(Course course) {
@@ -63,5 +85,6 @@ void BinarySearchTree::DisplayCourseList() {
 }
 
 void BinarySearchTree::DisplayACourse(string courseNum) {
-    
+    if (!searchNode(courseNum))
+        cout << courseNum << " not found in database." << endl;
 }

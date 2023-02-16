@@ -29,11 +29,12 @@ int CheckPrereq(Course curCourse, vector<string> courseNumList) {
 }
 
 int main() {
-    BinarySearchTree tree;
+    BinarySearchTree* tree = new BinarySearchTree();
     Course curCourse;
     vector<vector<string>> fileData;
     vector<string> courseNumList;
     string lavatory;
+    string userInput;
     unsigned int menuChoice = 8;
     unsigned int i;
     bool flag = false;
@@ -77,20 +78,34 @@ int main() {
                     }
                     else
                         curCourse.prereq1 = "";
-                    if (fileData[i].size() > 3)
+                    if (fileData[i].size() > 3) {
                         curCourse.prereq2 = fileData[i][3];
+                        if(!CheckPrereq(curCourse, courseNumList)) {
+                            menuChoice = 9;
+                            break;
+                        }
+                    }
                     else
                         curCourse.prereq2 = "";
-                    if (fileData[i].size() > 4)
+                    if (fileData[i].size() > 4) {
                         curCourse.prereq3 = fileData[i][4];
+                        if(!CheckPrereq(curCourse, courseNumList)) {
+                            menuChoice = 9;
+                            break;
+                        }
+                    }
                     else
                         curCourse.prereq3 = "";
+                    tree->Insert(curCourse);
                 }
                 break;
             case 2:
-                tree.DisplayCourseList();
+                tree->DisplayCourseList();
                 break;
             case 3:
+                cout << "Enter the Course Number you wish to view the details of: ";
+                cin >> userInput;
+                tree->DisplayACourse(userInput);
                 break;
             case 9:
                 cout << "Thank you for using the CourseViewer program!" << endl;

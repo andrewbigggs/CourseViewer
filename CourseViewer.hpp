@@ -39,18 +39,17 @@ struct Node {
 
 class BinarySearchTree {
 private:
-    void addNode(Course course);
+    void addNode(Node* curNode, Course course);
     void inorderTraversalWithPrint(Node *node);
-    void searchNode(Node* node);
+    int searchNode(string courseNum);
     
-    Node* root = new Node();
-
+    Node* root;
+    
 public:
     BinarySearchTree();
     void Insert(Course course);
     void DisplayCourseList();
     void DisplayACourse(string courseNum);
-    
 };
 
 
